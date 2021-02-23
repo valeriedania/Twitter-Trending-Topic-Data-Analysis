@@ -1,4 +1,5 @@
 import json
+from collections import Counter
 
 #Loaading WW_trends and US_trends
 WW_trends = json.loads(open('datasets/WWTrends.json').read())
@@ -51,3 +52,21 @@ hashtags = [hashtag['text']
 print (json.dumps(texts[0:10], indent=1),"\n")
 print (json.dumps(names[0:10], indent=1),"\n")
 print (json.dumps(hashtags[0:10], indent=1),"\n")
+
+#Getting frequency distribution of names and hashtags
+for item in [names, hashtags]:
+  c = Counter(item)
+  #Inspecting the most common items in c
+  print(c.most_common(10), "\n")
+
+# Extracting useful information from retweets
+retweets = [
+             (tweet['retweet_count'], 
+              tweet['retweeted_status']['favorite_count'],
+              tweet['retweeted_status']['user']['followers_count'],
+              tweet['retweeted_status']['user']['screen_name'],
+              tweet['text']) 
+            
+            for tweet in tweets 
+                if 'retweeted_status' in tweet
+           ]
