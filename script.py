@@ -80,3 +80,13 @@ df = pd.DataFrame(
     ['ScreenName','Text','Followers']).sum().sort_values(by=['Followers'], ascending=False)
 
 df.style.background_gradient()
+
+#Extracting languages for each tweet and appending to language list
+tweets_languages = []
+for tweet in tweets:
+        tweets_languages.append(tweet['lang'])
+
+# Plotting the distribution of languages
+%matplotlib inline
+plt.hist(tweets_languages)
+
