@@ -1,5 +1,7 @@
 import json
 from collections import Counter
+import matplotlib.pyplot as plt
+import pandas as pd
 
 #Loaading WW_trends and US_trends
 WW_trends = json.loads(open('datasets/WWTrends.json').read())
@@ -70,3 +72,11 @@ retweets = [
             for tweet in tweets 
                 if 'retweeted_status' in tweet
            ]
+
+# Visualizing the data in a pretty and insightful format
+df = pd.DataFrame(
+    retweets, 
+    columns=['Retweets','Favorites','Followers','ScreenName','Text']).groupby(
+    ['ScreenName','Text','Followers']).sum().sort_values(by=['Followers'], ascending=False)
+
+df.style.background_gradient()
